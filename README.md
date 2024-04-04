@@ -1,10 +1,12 @@
 # Python Keylogger
 
-This Python keylogger records keystrokes and emails them when a preset number is reached.
+- This Python keylogger records keystrokes and emails them when a preset number is reached.
 
-This project represents my first venture into Python cybersecurity tools, showcasing my learning journey and exploration of practical applications in the field. You can check out the video demonstration here: https://youtu.be/icJmkVbXp0g
+- This project represents my first venture into Python cybersecurity tools, showcasing my learning journey and exploration of practical applications in the field. 
 
-If you just want the code with no descriptive comments use the Code-only-keylogger file.
+- You can check out the video demonstration here: https://youtu.be/icJmkVbXp0g
+
+- If you just want the code with no descriptive comments use the Code-only-keylogger file.
 ## Description
 
 - **Keylogger Functionality**: The Python script serves as a proof of concept keylogger designed to record keystrokes and transmit them via email. 
