@@ -4,6 +4,7 @@ This Python keylogger records keystrokes and emails them when a preset number is
 
 This project represents my first venture into Python cybersecurity tools, showcasing my learning journey and exploration of practical applications in the field. You can check out the video demonstration here: https://youtu.be/icJmkVbXp0g
 
+If you just want the code with no descriptive comments click on the code-only option.
 ## Description
 
 - **Keylogger Functionality**: The Python script serves as a proof of concept keylogger designed to record keystrokes and transmit them via email. 
